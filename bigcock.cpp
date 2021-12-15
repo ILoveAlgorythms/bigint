@@ -5,6 +5,8 @@
 using namespace std;
 
 class BigInt {
+private:
+    vector<int> _data;
 public:
     BigInt() {
     }
@@ -44,6 +46,7 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& out, const BigInt& value);
+
 };
 
 std::ostream& operator<<(std::ostream& out, const BigInt& value) {
