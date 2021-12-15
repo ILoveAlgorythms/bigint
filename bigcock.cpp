@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <sstream>
-
+#include <vector>
 using namespace std;
 
 class BigInt {
@@ -11,13 +11,31 @@ public:
     BigInt() {
     }
 
-    BigInt(const long long x) {
+    BigInt(const long long xx) {
+        long long int x=xx;
+        if(x==0)
+            _data.push_back(x);
+        else
+        {
+            while(x!=0)
+            {
+                _data.push_back(x%10);
+                x/=10;
+            }
+        }
     }
 
     BigInt(const BigInt& other) {
+        for(int i=0;i<other._data.size()-1;++i)
+        {
+            _data.push_back(other._data[i]);
+        }
     }
 
     BigInt& operator=(const BigInt& other) {
+        _data.clear();
+        for(int i=0;i<other._data.size()-1;++i)
+            _data.push_back(other._data[i]);
         return *this;
     }
 
@@ -28,21 +46,55 @@ public:
     }
 
     bool operator==(const BigInt& other) const {
+        if(_data.size()!=other._data.size())
+            return false;
+        else
+        {
+            for(int i=0;i<_data.size();++i)
+                if(_data[i]!=other._data[i])
+                    return false;
+            return true;
+        }
     }
 
     bool operator!=(const BigInt& other) const {
+        return !(*this==other);
     }
 
     bool operator<(const BigInt& other) const {
+        if(_data.size()<other._data.size())
+            return true;
+        else if(_data.size()>other._data.size())
+            return false;
+        else
+        {
+            for(int i=0;i<_data.size();++i)
+                if(_data[i]>other._data[i])
+                    return false;
+            return true;
+        }
     }
 
     bool operator<=(const BigInt& other) const {
+        return !(*this>other);
     }
 
     bool operator>(const BigInt& other) const {
+        if(_data.size()>other._data.size())
+            return true;
+        else if(_data.size()<other._data.size())
+            return false;
+        else
+        {
+            for(int i=0;i<_data.size();++i)
+                if(_data[i]<other._data[i])
+                    return false;
+            return true;
+        }
     }
 
     bool operator>=(const BigInt& other) const {
+        return !(*this<other);
     }
 
     friend std::ostream& operator<<(std::ostream& out, const BigInt& value);
