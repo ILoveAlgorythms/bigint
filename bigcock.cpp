@@ -51,10 +51,44 @@ public:
            ans._data.push_back(t%10);
             t/=10;
         } 
+        if(t>0)
+            ans._data.push_back(t);
+        return ans;
     }
 
     BigInt operator*(const BigInt& other) const {
+        BigInt ans;
+        for(int i=0;i<_data.size();++i)
+        {
+            int t=0,j;
+            for(j=0;j<other._data.size();++j)
+            {
+                t+=_data[i]*other._data[i];
+                if(i+j<ans._data.size())
+                {
+                    t+=ans._data[i+j];
+                    ans._data[i+j]=t%10;
+                }
+                else
+                    ans._data.push_back(t%10);
+                t/=10;
+                while(t>0)
+                {
+                    if(i+j<ans._data.size())
+                    {
+                        t+=ans[i+j];
+                        ans[i+j]=t%10;
+                    }
+                    else
+                        ans.push_back(t%10);
+                    t/10;
+                    ++j;
+                }
+            }
+            
+        }
     }
+        
 
     bool operator==(const BigInt& other) const {
         if(_data.size()!=other._data.size())
