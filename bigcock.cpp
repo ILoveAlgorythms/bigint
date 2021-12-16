@@ -40,6 +40,17 @@ public:
     }
 
     BigInt operator+(const BigInt& other) const {
+        int t=0;
+        BigInt ans;
+        for(int i=0;i<max(_data.size(),other._data.size();++i)
+        {
+            if(i<_data.size())
+                t+=_data[i];
+            if(i<other._data.size())
+                t+=other._data[i];
+           ans._data.push_back(t%10);
+            t/=10;
+        } 
     }
 
     BigInt operator*(const BigInt& other) const {
