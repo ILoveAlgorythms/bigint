@@ -72,7 +72,8 @@ public:
                 else
                     ans._data.push_back(t%10);
                 t/=10;
-                while(t>0)
+            }
+             while(t>0)
                 {
                     if(i+j<ans._data.size())
                     {
@@ -84,9 +85,9 @@ public:
                     t/10;
                     ++j;
                 }
-            }
             
         }
+        return ans;
     }
         
 
