@@ -2,6 +2,7 @@
 #include <limits>
 #include <sstream>
 #include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 class BigInt {
@@ -42,7 +43,7 @@ public:
     BigInt operator+(const BigInt& other) const {
         int t=0;
         BigInt ans;
-        for(int i=0;i<max(_data.size(),other._data.size();++i)
+        for(int i=0;i < max( _data.size() , other._data.size() );++i)
         {
             if(i<_data.size())
                 t+=_data[i];
@@ -61,9 +62,9 @@ public:
         for(int i=0;i<_data.size();++i)
         {
             int t=0,j;
-            for(j=0;j<other._data.size();++j)
+            for(j=0; j < other._data.size(); ++j)
             {
-                t+=_data[i]*other._data[i];
+                t+=_data[i]*other._data[j];
                 if(i+j<ans._data.size())
                 {
                     t+=ans._data[i+j];
@@ -77,11 +78,11 @@ public:
                 {
                     if(i+j<ans._data.size())
                     {
-                        t+=ans[i+j];
-                        ans[i+j]=t%10;
+                        t+=ans._data[i+j];
+                        ans._data[i+j]=t%10;
                     }
                     else
-                        ans.push_back(t%10);
+                        ans._data.push_back(t%10);
                     t/10;
                     ++j;
                 }
@@ -148,6 +149,10 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& out, const BigInt& value) {
+	for (int i=_data.size()-1;i>=0;--i)
+	{
+		
+	}
 }
 
 std::string toString(const BigInt& value)
