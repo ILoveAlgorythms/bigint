@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include <bits/stdc++.h>
+#define int64_t long long
 using namespace std;
 
 class BigInt {
@@ -21,13 +22,13 @@ public:
             while(x!=0)
             {
                 _data.push_back(x%10);
-                x/=10;
+                x=x/10;
             }
         }
     }
 
     BigInt(const BigInt& other) {
-        for(int i=0;i<other._data.size()-1;++i)
+        for(int i=0;i<other._data.size();++i)
         {
             _data.push_back(other._data[i]);
         }
@@ -35,7 +36,7 @@ public:
 
     BigInt& operator=(const BigInt& other) {
         _data.clear();
-        for(int i=0;i<other._data.size()-1;++i)
+        for(int i=0;i<other._data.size();++i)
             _data.push_back(other._data[i]);
         return *this;
     }
@@ -83,9 +84,17 @@ public:
                     }
                     else
                         ans._data.push_back(t%10);
-                    t/10;
+                    t=t/10;
                     ++j;
                 }
+            
+        }
+        for(int i=ans._data.size()-1;i>=1;--i)
+        {
+            if(ans._data[i]==0)
+                ans._data.pop_back();
+            else
+                i=ans._data.size()+57;
             
         }
         return ans;
@@ -98,9 +107,11 @@ public:
         else
         {
             for(int i=0;i<_data.size();++i)
+            {
                 if(_data[i]!=other._data[i])
                     return false;
-            return true;
+        	}
+			return true;
         }
     }
 
@@ -115,8 +126,8 @@ public:
             return false;
         else
         {
-            for(int i=0;i<_data.size();++i)
-                if(_data[i]>other._data[i])
+            for(int i=_data.size()-1;i>=0;--i)
+                if(_data[i]>=other._data[i])
                     return false;
             return true;
         }
@@ -133,8 +144,8 @@ public:
             return false;
         else
         {
-            for(int i=0;i<_data.size();++i)
-                if(_data[i]<other._data[i])
+            for(int i=_data.size()-1;i>=0;--i)
+                if(_data[i]<=other._data[i])
                     return false;
             return true;
         }
@@ -149,10 +160,11 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& out, const BigInt& value) {
-	for (int i=_data.size()-1;i>=0;--i)
+	for (int i=value._data.size()-1;i>=0;--i)
 	{
-		
+		out<<value._data[i];
 	}
+	return out;
 }
 
 std::string toString(const BigInt& value)
