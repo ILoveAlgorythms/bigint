@@ -1,6 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <sstream>
+#include <string>
 #include <vector>
 #include <bits/stdc++.h>
 #define int64_t long long
@@ -11,6 +12,7 @@ private:
     vector<int> _data;
 public:
     BigInt() {
+    	
     }
 
     BigInt(const long long xx) {
@@ -26,6 +28,7 @@ public:
             }
         }
     }
+    
 
     BigInt(const BigInt& other) {
         for(int i=0;i<other._data.size();++i)
@@ -60,6 +63,8 @@ public:
 
     BigInt operator*(const BigInt& other) const {
         BigInt ans;
+        if(_data.empty()==true||other._data.empty()==true)
+        	return BigInt(0);
         for(int i=0;i<_data.size();++i)
         {
             int t=0,j;
@@ -89,14 +94,17 @@ public:
                 }
             
         }
-        for(int i=ans._data.size()-1;i>=1;--i)
+        for(int i=ans._data.size()-1;i>=0;--i)
         {
             if(ans._data[i]==0)
                 ans._data.pop_back();
             else
-                i=ans._data.size()+57;
+                /*i=ans._data.size()+57;*/
+                i=-1;
             
         }
+        if(ans._data.empty()==true)
+            ans._data.push_back(0);
         return ans;
     }
         
@@ -260,6 +268,11 @@ int main()
             check(i, j);
         }
     }
+    BigInt cock=1;
+    cock=cock*0;
+    std::cout<<endl<<"ijdskjdskjd"<<endl<<cock<<endl<<endl<<endl;
+
+
 
     const BigInt big1 = std::numeric_limits<int64_t>::max();
     checkEqual(big1, "9223372036854775807");
