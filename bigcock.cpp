@@ -12,10 +12,11 @@ private:
     vector<int> _data;
 public:
     BigInt() {
-    	
+        _data.push_back(0);
     }
 
     BigInt(const long long xx) {
+        _data.clear();
         long long int x=xx;
         if(x==0)
             _data.push_back(x);
@@ -46,8 +47,15 @@ public:
 
     BigInt operator+(const BigInt& other) const {
         int t=0;
-        BigInt ans;
-        for(int i=0;i < max( _data.size() , other._data.size() );++i)
+        BigInt ans=BigInt(0);
+        //ans=0;
+        if(0<_data.size())
+                t+=_data[0];
+            if(0<other._data.size())
+                t+=other._data[0];
+           ans=(t%10);
+            t/=10;
+        for(int i=1;i < max( _data.size() , other._data.size() );++i)
         {
             if(i<_data.size())
                 t+=_data[i];
@@ -56,8 +64,19 @@ public:
            ans._data.push_back(t%10);
             t/=10;
         } 
+        
         if(t>0)
             ans._data.push_back(t);
+            
+        for(int i=ans._data.size()-1;i>=0;--i)
+        {
+            if(ans._data[i]==0)
+                ans._data.pop_back();
+            else
+                /*i=ans._data.size()+57;*/
+                i=-1;
+            
+        }
         return ans;
     }
 
@@ -110,7 +129,12 @@ public:
         
 
     bool operator==(const BigInt& other) const {
-        if(_data.size()!=other._data.size())
+        if( (_data.empty() == true && other._data.size() == 1 && other._data[0]==0) || (other._data.empty() == true && _data.size() == 1 && _data[0]==0) )
+        {
+            return true;
+        }
+            
+        else if(_data.size()!=other._data.size())
             return false;
         else
         {
@@ -268,6 +292,8 @@ int main()
             check(i, j);
         }
     }
+    
+    /////////////////////////////////////////////////////
     BigInt cock=1;
     cock=cock*0;
     std::cout<<endl<<"ijdskjdskjd"<<endl<<cock<<endl<<endl<<endl;
