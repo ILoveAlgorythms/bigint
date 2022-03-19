@@ -48,7 +48,6 @@ public:
     BigInt operator+(const BigInt& other) const {
         int t=0;
         BigInt ans=BigInt(0);
-        //ans=0;
         if(0<_data.size())
                 t+=_data[0];
             if(0<other._data.size())
@@ -73,13 +72,12 @@ public:
             if(ans._data[i]==0)
                 ans._data.pop_back();
             else
-                /*i=ans._data.size()+57;*/
                 i=-1;
             
         }
         return ans;
     }
-
+//nakonetsto blyat//
     BigInt operator*(const BigInt& other) const {
         BigInt ans;
         if(_data.empty()==true||other._data.empty()==true)
@@ -118,7 +116,6 @@ public:
             if(ans._data[i]==0)
                 ans._data.pop_back();
             else
-                /*i=ans._data.size()+57;*/
                 i=-1;
             
         }
@@ -152,15 +149,23 @@ public:
     }
 
     bool operator<(const BigInt& other) const {
+        if(*this==other)
+            return false;
         if(_data.size()<other._data.size())
             return true;
         else if(_data.size()>other._data.size())
             return false;
         else
         {
-            for(int i=_data.size()-1;i>=0;--i)
-                if(_data[i]>=other._data[i])
+            for(int i=_data.size()-1;i>=1;--i)
+            {
+                if(_data[i]>other._data[i])
                     return false;
+                if(_data[i]<other._data[i])
+                    return true;
+            }
+            if(_data[0]>=other._data[0])
+                return false;
             return true;
         }
     }
@@ -170,15 +175,25 @@ public:
     }
 
     bool operator>(const BigInt& other) const {
+        if(*this==other)
+            return false;
         if(_data.size()>other._data.size())
             return true;
         else if(_data.size()<other._data.size())
             return false;
         else
         {
-            for(int i=_data.size()-1;i>=0;--i)
-                if(_data[i]<=other._data[i])
+            for(int i=_data.size()-1;i>=1;--i)
+            {
+                if(_data[i]<other._data[i])
                     return false;
+                if(_data[i]>other._data[i])
+                    return true;
+                
+            }
+                if(_data[0]<=other._data[0])
+                return false;
+            
             return true;
         }
     }
@@ -293,10 +308,6 @@ int main()
         }
     }
     
-    /////////////////////////////////////////////////////
-    BigInt cock=1;
-    cock=cock*0;
-    std::cout<<endl<<"ijdskjdskjd"<<endl<<cock<<endl<<endl<<endl;
 
 
 
