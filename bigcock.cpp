@@ -15,18 +15,15 @@ public:
     BigInt() {
         _data.push_back(0);
     }
-	
-	//первая и вторая часть 
-	BigInt part1(const long long int l)
-	{
+	//?????? ? ?????? ????? 
+	BigInt part1(const long long int l){
 		BigInt ans;
 		ans._data.pop_back();
 		for(int i=0;i<l;++i)
 			ans._data.push_back(_data[i]);
 		return ans;
 	}
-	BigInt part2(const long long int l)
-	{
+	BigInt part2(const long long int l){
 		BigInt ans;
 		ans._data.pop_back();
 		for(int i=l;i<_data.size();++i)
@@ -48,7 +45,6 @@ public:
             }
         }
     }
-    
 
     BigInt(const BigInt& other) {
         for(int i=0;i<other._data.size();++i)
@@ -96,9 +92,42 @@ public:
         }
         return ans;
     }
-//katsruba//
- BigInt simpl(const BigInt& other)
-    {
+    
+    BigInt operator-(const BigInt& other) const {
+        int t=0;
+        BigInt ans=BigInt(0);
+        if(0<_data.size())
+                t+=_data[0];
+            if(0<other._data.size())
+                t+=-other._data[0];
+           ans=(t%10);
+            t/=10;
+        for(int i=1;i < max( _data.size() , other._data.size() );++i)
+        {
+            if(i<_data.size())
+                t+=_data[i];
+            if(i<other._data.size())
+                t+=-other._data[i];
+           ans._data.push_back(t%10);
+            t/=10;
+        } 
+        
+        if(t>0)
+            ans._data.push_back(t);
+            
+        for(int i=ans._data.size()-1;i>=0;--i)
+        {
+            if(ans._data[i]==0)
+                ans._data.pop_back();
+            else
+                i=-1;
+            
+        }
+        return ans;
+    }
+
+    //katsruba//
+    BigInt simpl(const BigInt& other){
     	BigInt ans;
         if(_data.empty()==true||other._data.empty()==true)
         	return BigInt(0);
@@ -143,6 +172,7 @@ public:
             ans._data.push_back(0);
         return ans;
 	}
+	
 	BigInt ka(const BigInt& other)
 	{
 		long long int l=max(_data.size(), other._data.size())/2;
@@ -164,7 +194,17 @@ public:
 		}
 		
 		BigInt ans=a0b0;
+		BigInt z=ab;
+		z=z+ab;
+		z=z-a0b0;
+		z=z-a1b1;
 		
+		for(int i=0;i<l;++i)
+		    z._data.push_back(0);
+	    for(int i=0;i<2*l;++i)
+	        a1b1._data.push_back(0);
+	    ans=ans+z;
+	    ans=ans+a1b1;
 	}
     BigInt operator*(const BigInt& other) const {
 		if( max(_data.size(),other._data.size()) <mxl)
@@ -172,8 +212,7 @@ public:
 		else 
 			return ka(const BigInt& other);
     }
-        
-
+    
     bool operator==(const BigInt& other) const {
         if( (_data.empty() == true && other._data.size() == 1 && other._data[0]==0) || (other._data.empty() == true && _data.size() == 1 && _data[0]==0) )
         {
@@ -192,11 +231,9 @@ public:
 			return true;
         }
     }
-
     bool operator!=(const BigInt& other) const {
         return !(*this==other);
     }
-
     bool operator<(const BigInt& other) const {
         if(*this==other)
             return false;
@@ -218,11 +255,9 @@ public:
             return true;
         }
     }
-
     bool operator<=(const BigInt& other) const {
         return !(*this>other);
     }
-
     bool operator>(const BigInt& other) const {
         if(*this==other)
             return false;
@@ -246,7 +281,6 @@ public:
             return true;
         }
     }
-
     bool operator>=(const BigInt& other) const {
         return !(*this<other);
     }
