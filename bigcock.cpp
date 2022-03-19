@@ -6,14 +6,33 @@
 #include <bits/stdc++.h>
 #define int64_t long long
 using namespace std;
-
+const int mxl=10;
 class BigInt {
 private:
     vector<int> _data;
+   
 public:
     BigInt() {
         _data.push_back(0);
     }
+	
+	//первая и вторая часть 
+	BigInt part1(const long long int l)
+	{
+		BigInt ans;
+		ans._data.pop_back();
+		for(int i=0;i<l;++i)
+			ans._data.push_back(_data[i]);
+		return ans;
+	}
+	BigInt part2(const long long int l)
+	{
+		BigInt ans;
+		ans._data.pop_back();
+		for(int i=l;i<_data.size();++i)
+			ans._data.push_back(_data[i]);
+		return ans;
+	}
 
     BigInt(const long long xx) {
         _data.clear();
@@ -77,9 +96,10 @@ public:
         }
         return ans;
     }
-//nakonetsto blyat//
-    BigInt operator*(const BigInt& other) const {
-        BigInt ans;
+//katsruba//
+ BigInt simpl(const BigInt& other)
+    {
+    	BigInt ans;
         if(_data.empty()==true||other._data.empty()==true)
         	return BigInt(0);
         for(int i=0;i<_data.size();++i)
@@ -122,6 +142,35 @@ public:
         if(ans._data.empty()==true)
             ans._data.push_back(0);
         return ans;
+	}
+	BigInt ka(const BigInt& other)
+	{
+		long long int l=max(_data.size(), other._data.size())/2;
+		BigInt a0=part1(l);
+		BigInt a1=part2(l);
+		BigInt b0=other.part1(l);
+		BigInt b1=other.part2(l);
+		if(l<mxl)
+		{
+			BigInt a0b0=smpl(a0,b0);
+			BigInt a1b1=smpl(a1,b1);
+			BigInt ab=smpl((a0+a1),(b0+b1));
+		}
+		else
+		{
+			BigInt a0b0=ka(a0,b0);
+			BigInt a1b1=ka(a1,b1);
+			BigInt ab=ka((a0+a1),(b0+b1));
+		}
+		
+		BigInt ans=a0b0;
+		
+	}
+    BigInt operator*(const BigInt& other) const {
+		if( max(_data.size(),other._data.size()) <mxl)
+			BigInt ans=simpl(other);
+		else 
+			return ka(const BigInt& other);
     }
         
 
